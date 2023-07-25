@@ -33,12 +33,24 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String giroscopioDisplayText;
     private String acelerometroText;
     private String bpmText;
+    private String bpmDisplayText;
 
     private Date horario = Calendar.getInstance().getTime();
 
+    private SensorEventListener bpmEventListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            bpmDisplayText = "bpm: " + event.values[0];
+            bpmText = "" + horario + ", " + event.values[0];
+            displayBpm.setText(bpmDisplayText);
+            writeToFile("bpm.txt", bpmText);
+        }
 
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
 
-
+        }
+    };
 
 
     @Override
@@ -49,7 +61,7 @@ public class mainActivity extends Activity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //
         giroscopio = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        bpm = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        bpm = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
 
         setContentView(R.layout.main_activity);
@@ -59,13 +71,12 @@ public class mainActivity extends Activity implements SensorEventListener {
 
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, bpm, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_FASTEST);
 
 
 
@@ -84,7 +95,6 @@ public class mainActivity extends Activity implements SensorEventListener {
         giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
         acelerometroText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
         giroscopioText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
-        bpmText = "bpm" + event.values[0];
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             displayAcelerometro.setText(acelerometroDisplayText);
@@ -93,9 +103,6 @@ public class mainActivity extends Activity implements SensorEventListener {
             displayGiroscopio.setText(giroscopioDisplayText);
             writeToFile("giroscopio.txt", giroscopioText);
 
-        } else if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
-            displayBpm.setText(bpmText);
-            writeToFile("bpm.txt", bpmText);
         }
     }
 
