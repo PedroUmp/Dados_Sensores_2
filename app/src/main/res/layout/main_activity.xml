@@ -1,26 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/acele"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="57dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="86dp"
-        android:layout_marginEnd="85dp"
-        android:text="TextView" />
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="54dp"
+        android:text="TextView"
+        android:textColor="#047cc4"/>
 
     <TextView
         android:id="@+id/giros"
         android:layout_width="wrap_content"
+        android:layout_height="69dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="31dp"
+        android:text="TextView"
+        android:textColor="#047cc4" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="134dp"
-        android:layout_marginEnd="85dp"
-        android:text="TextView" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="69dp"
+        android:text="Acelerometro"
+        android:textColor="#2b146c"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="80dp"
+        android:text="Giroscópio"
+        android:textColor="#2b146c"/>
+
+    <TextView
+        android:id="@+id/batim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="153dp"
+        android:layout_marginBottom="107dp"
+        android:text="TextView"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

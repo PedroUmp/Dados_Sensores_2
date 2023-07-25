@@ -8,29 +8,52 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+
+import java.io.IOException;
 public class mainActivity extends Activity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private TextView displayAcelerometro;
     private TextView displayGiroscopio;
+    private TextView displayBpm;
     private Sensor acelerometro;
     private Sensor giroscopio;
+    private Sensor bpm;
     private String giroscopioText;
+    private String acelerometroDisplayText;
+    private String giroscopioDisplayText;
     private String acelerometroText;
+    private String bpmText;
+
+    private Date horario = Calendar.getInstance().getTime();
+
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //
         giroscopio = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        bpm = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 
 
         setContentView(R.layout.main_activity);
+        displayBpm = findViewById(R.id.batim);
         displayAcelerometro = findViewById(R.id.acele);
         displayGiroscopio = findViewById(R.id.giros);
 
@@ -42,6 +65,10 @@ public class mainActivity extends Activity implements SensorEventListener {
         super.onResume();
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, bpm, SensorManager.SENSOR_DELAY_NORMAL);
+
+
+
 
     }
 
@@ -53,17 +80,42 @@ public class mainActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        acelerometroText = "X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2];
-        giroscopioText = "X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2];
+        acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
+        giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
+        acelerometroText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+        giroscopioText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+        bpmText = "bpm" + event.values[0];
+
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            displayAcelerometro.setText(acelerometroText);
+            displayAcelerometro.setText(acelerometroDisplayText);
+            writeToFile("acelerometro.txt", acelerometroText);
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-            displayGiroscopio.setText(giroscopioText);
+            displayGiroscopio.setText(giroscopioDisplayText);
+            writeToFile("giroscopio.txt", giroscopioText);
+
+        } else if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
+            displayBpm.setText(bpmText);
+            writeToFile("bpm.txt", bpmText);
         }
     }
 
+    private void writeToFile(String filename, String data) {
+        File directory = new File("/data/data/com.example.sematividade");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        File file = new File(directory, filename);
+
+        try (FileWriter fileWriter = new FileWriter(file, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+            printWriter.println(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onAccuracyChanged(Sensor acelerometro , int acuracia) {
-
     }
 }
