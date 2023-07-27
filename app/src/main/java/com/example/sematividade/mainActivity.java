@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,13 +36,13 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String bpmText;
     private String bpmDisplayText;
 
-    private Date horario = Calendar.getInstance().getTime();
-
+    private Date data = Calendar.getInstance().getTime();
     private SensorEventListener bpmEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+            data = Calendar.getInstance().getTime();
             bpmDisplayText = "bpm: " + event.values[0];
-            bpmText = "" + horario + ", " + event.values[0];
+            bpmText = "" + data + ", " + event.values[0];
             displayBpm.setText(bpmDisplayText);
             writeToFile("bpm.txt", bpmText);
         }
@@ -74,9 +75,9 @@ public class mainActivity extends Activity implements SensorEventListener {
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -88,10 +89,11 @@ public class mainActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        data = Calendar.getInstance().getTime();
         acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
         giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
-        acelerometroText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
-        giroscopioText = "" + horario + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+        acelerometroText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+        giroscopioText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             displayAcelerometro.setText(acelerometroDisplayText);
