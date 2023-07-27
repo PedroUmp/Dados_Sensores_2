@@ -77,16 +77,13 @@ public class mainActivity extends Activity implements SensorEventListener {
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_FASTEST);
-
-
-
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(bpmEventListener);
     }
 
     @Override
@@ -102,7 +99,6 @@ public class mainActivity extends Activity implements SensorEventListener {
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             displayGiroscopio.setText(giroscopioDisplayText);
             writeToFile("giroscopio.txt", giroscopioText);
-
         }
     }
 
