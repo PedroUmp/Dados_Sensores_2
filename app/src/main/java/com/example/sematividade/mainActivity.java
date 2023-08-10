@@ -41,10 +41,18 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String bpmText;
     private String bpmDisplayText;
     private Button botao;
-    private int pessoaID = 0;
     private TextView displayPessoaiD;
+    private int pessoaID = 1;
+    private String pessoaIDText;
+    private String arquivoAcelerometro;
+    private String arquivoGiroscopio;
+    //private String arquivoBpm;
+    private Button botaoParar;
+    private int parado = 0;
 
     private Date data = Calendar.getInstance().getTime();
+
+    private String arquivoBpm = "BPM" + pessoaID + "txt";
     private SensorEventListener bpmEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
@@ -52,7 +60,7 @@ public class mainActivity extends Activity implements SensorEventListener {
             bpmDisplayText = "bpm: " + event.values[0];
             bpmText = "" + data + ", " + event.values[0];
             displayBpm.setText(bpmDisplayText);
-            writeToFile("bpm.txt", bpmText);
+            writeToFile("arquivoBpm", bpmText);
         }
 
         @Override
@@ -79,6 +87,9 @@ public class mainActivity extends Activity implements SensorEventListener {
         displayGiroscopio = findViewById(R.id.giros);
         botao = findViewById(R.id.button);
         displayPessoaiD = findViewById(R.id.id_da_pessoa);
+        botaoParar = findViewById(R.id.parar);
+
+        displayPessoaiD.setText("1");
 
 
     }
@@ -91,11 +102,26 @@ public class mainActivity extends Activity implements SensorEventListener {
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pessoaID = pessoaID + 1;
-                displayPessoaiD.setText(pessoaID);
+                if (parado == 0) {
+                    pessoaID = pessoaID + 1;
+                    pessoaIDText = String.valueOf(pessoaID);
+                    displayPessoaiD.setText(pessoaIDText);
+                }
             }
         });
-
+       botaoParar.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               if (parado==0) {
+                   parado = 1;
+                   //botaoParar.setBackgroundColor(#2b146c);
+               }
+               else {
+                   parado = 0;
+                   //botaoParar.setBackgroundColor();
+               }
+           }
+       });
     }
 
     @Override
@@ -107,35 +133,43 @@ public class mainActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        data = Calendar.getInstance().getTime();
-        acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
-        giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
-        acelerometroText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
-        giroscopioText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+        if (parado == 0) {
+            data = Calendar.getInstance().getTime();
+            acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
+            giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
+            acelerometroText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+            giroscopioText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
 
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            displayAcelerometro.setText(acelerometroDisplayText);
-            writeToFile("acelerometro.txt", acelerometroText);
-        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-            displayGiroscopio.setText(giroscopioDisplayText);
-            writeToFile("giroscopio.txt", giroscopioText);
+
+            arquivoAcelerometro = "acelerometro" + pessoaID + "txt";
+            arquivoGiroscopio = "giroscopio" + pessoaID + "txt";
+
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                displayAcelerometro.setText(acelerometroDisplayText);
+                writeToFile(arquivoAcelerometro, acelerometroText);
+            } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+                displayGiroscopio.setText(giroscopioDisplayText);
+                writeToFile(arquivoGiroscopio, giroscopioText);
+            }
         }
     }
 
     private void writeToFile(String filename, String data) {
-        File directory = new File("/data/data/com.example.sematividade");
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
+        if (parado == 0) {
+            File directory = new File("/data/data/com.example.sematividade");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
 
-        File file = new File(directory, filename);
+            File file = new File(directory, filename);
 
-        try (FileWriter fileWriter = new FileWriter(file, true);
-             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
-            printWriter.println(data);
-        } catch (IOException e) {
-            e.printStackTrace();
+            try (FileWriter fileWriter = new FileWriter(file, true);
+                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                 PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+                printWriter.println(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     @Override

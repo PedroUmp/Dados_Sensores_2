@@ -13,8 +13,9 @@
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="34dp"
+        android:layout_marginEnd="33dp"
         android:text="TextView"
         android:textColor="#047cc4" />
 
@@ -39,10 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="69dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="62dp"
         android:text="Acelerometro"
-        android:textColor="#2b146c"/>
+        android:textColor="#2b146c" />
 
     <TextView
         android:id="@+id/textView2"
@@ -51,9 +52,9 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="94dp"
-        android:layout_marginEnd="78dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="79dp"
         android:text="Giroscópio"
         android:textColor="#2b146c" />
 
@@ -71,12 +72,23 @@
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="83dp"
-        android:text="Button" />
+        android:layout_marginEnd="143dp"
+        android:layout_marginBottom="71dp"
+        android:background="#047cc4"
+        android:text="Next" />
+
+    <Button
+        android:id="@+id/parar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="134dp"
+        android:layout_marginBottom="29dp"
+        android:text="Stop" />
 
     <TextView
         android:id="@+id/id_da_pessoa"
@@ -84,8 +96,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="9dp"
-        android:text="TextView" />
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="3dp"
+        android:text="TextView"
+        android:textColor="#2b146c" />
 
 </RelativeLayout>
