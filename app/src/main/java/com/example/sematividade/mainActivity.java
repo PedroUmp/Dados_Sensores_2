@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,7 +49,7 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String arquivoGiroscopio;
     //private String arquivoBpm;
     private Button botaoParar;
-    private int parado = 0;
+    private int parado = 1;
 
     private Date data = Calendar.getInstance().getTime();
 
@@ -60,7 +61,7 @@ public class mainActivity extends Activity implements SensorEventListener {
             bpmDisplayText = "bpm: " + event.values[0];
             bpmText = "" + data + ", " + event.values[0];
             displayBpm.setText(bpmDisplayText);
-            writeToFile("arquivoBpm", bpmText);
+            writeToFile(arquivoBpm, bpmText);
         }
 
         @Override
@@ -102,7 +103,7 @@ public class mainActivity extends Activity implements SensorEventListener {
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (parado == 0) {
+                if (parado == 1) {
                     pessoaID = pessoaID + 1;
                     pessoaIDText = String.valueOf(pessoaID);
                     displayPessoaiD.setText(pessoaIDText);
@@ -114,7 +115,7 @@ public class mainActivity extends Activity implements SensorEventListener {
            public void onClick(View view) {
                if (parado==0) {
                    parado = 1;
-                   //botaoParar.setBackgroundColor(#2b146c);
+                   //botaoParar.setBackgroundColor()
                }
                else {
                    parado = 0;

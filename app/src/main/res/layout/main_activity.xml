@@ -8,64 +8,64 @@
 
     <TextView
         android:id="@+id/acele"
-        android:layout_width="119dp"
-        android:layout_height="56dp"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="33dp"
+        android:layout_marginEnd="146dp"
         android:text="TextView"
-        android:textColor="#047cc4" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/giros"
-        android:layout_width="wrap_content"
-        android:layout_height="99dp"
+        android:layout_width="25dp"
+        android:layout_height="0dp"
         android:layout_below="@+id/textView2"
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="-2dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="-15dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginBottom="211dp"
         android:text="TextView"
-        android:textColor="#047cc4" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="31dp"
+        android:layout_height="1dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="21dp"
-        android:layout_marginEnd="62dp"
+        android:layout_marginEnd="115dp"
         android:text="Acelerometro"
-        android:textColor="#2b146c" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="17dp"
+        android:layout_height="0dp"
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="93dp"
-        android:layout_marginEnd="79dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="98dp"
         android:text="Giroscópio"
-        android:textColor="#2b146c" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/batim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="94dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="212dp"
         android:text="TextView"
         android:textColor="#999999" />
 
@@ -73,32 +73,35 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/parar"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="13dp"
         android:background="#047cc4"
         android:text="Next" />
 
-    <Button
+    <TextView
+        android:id="@+id/id_da_pessoa"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textColor="#2b146c" />
+
+    <ToggleButton
         android:id="@+id/parar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="134dp"
-        android:layout_marginBottom="29dp"
-        android:text="Stop" />
-
-    <TextView
-        android:id="@+id/id_da_pessoa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="3dp"
-        android:text="TextView"
-        android:textColor="#2b146c" />
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="24dp"
+        android:background="#047cc4"
+        android:text="ligado" />
 
 </RelativeLayout>
