@@ -68,4 +68,24 @@
         android:text="TextView"
         android:textColor="#999999" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="83dp"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/id_da_pessoa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="164dp"
+        android:layout_marginBottom="9dp"
+        android:text="TextView" />
+
 </RelativeLayout>

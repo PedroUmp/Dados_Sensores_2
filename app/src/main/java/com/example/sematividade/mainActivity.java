@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.sql.Time;
@@ -18,6 +19,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
+
+import android.widget.Button;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 public class mainActivity extends Activity implements SensorEventListener {
@@ -35,6 +40,9 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String acelerometroText;
     private String bpmText;
     private String bpmDisplayText;
+    private Button botao;
+    private int pessoaID = 0;
+    private TextView displayPessoaiD;
 
     private Date data = Calendar.getInstance().getTime();
     private SensorEventListener bpmEventListener = new SensorEventListener() {
@@ -60,7 +68,7 @@ public class mainActivity extends Activity implements SensorEventListener {
 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //
+        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         giroscopio = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         bpm = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
@@ -69,6 +77,8 @@ public class mainActivity extends Activity implements SensorEventListener {
         displayBpm = findViewById(R.id.batim);
         displayAcelerometro = findViewById(R.id.acele);
         displayGiroscopio = findViewById(R.id.giros);
+        botao = findViewById(R.id.button);
+        displayPessoaiD = findViewById(R.id.id_da_pessoa);
 
 
     }
@@ -78,6 +88,14 @@ public class mainActivity extends Activity implements SensorEventListener {
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_UI);
         sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_NORMAL);
+        botao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pessoaID = pessoaID + 1;
+                displayPessoaiD.setText(pessoaID);
+            }
+        });
+
     }
 
     @Override
