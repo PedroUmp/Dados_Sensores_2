@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 
@@ -69,8 +70,6 @@ public class mainActivity extends Activity implements SensorEventListener {
 
         }
     };
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +91,7 @@ public class mainActivity extends Activity implements SensorEventListener {
 
         displayPessoaiD.setText("1");
 
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     }
     @Override
