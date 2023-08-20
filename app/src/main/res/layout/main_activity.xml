@@ -31,10 +31,10 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="23dp"
         android:layout_marginTop="-15dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="211dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginBottom="210dp"
         android:text="TextView"
         android:textColor="#FFFFFF" />
 
@@ -44,8 +44,8 @@
         android:layout_height="1dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="115dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="156dp"
         android:text="Acelerometro"
         android:textColor="#FFFFFF" />
 
@@ -56,56 +56,74 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="98dp"
+        android:layout_marginStart="-6dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="134dp"
         android:text="Giroscópio"
         android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/batim"
-        android:layout_width="30dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="74dp"
-        android:layout_marginBottom="212dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="-6dp"
         android:text="TextView"
-        android:textColor="#999999" />
+        android:textColor="#BA4545" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="65dp"
+        android:layout_height="34dp"
         android:layout_above="@+id/parar"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="5dp"
         android:background="#047cc4"
         android:text="Next" />
 
     <TextView
-        android:id="@+id/id_da_pessoa"
+        android:id="@+id/posicao"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
         android:layout_alignStart="@+id/button"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="10dp"
         android:text="TextView"
         android:textColor="#2b146c" />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/parar"
-        android:layout_width="wrap_content"
+        android:layout_width="61dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="99dp"
+        android:layout_marginBottom="40dp"
+        android:background="#ECECEC">
+    </Switch>
+
+    <EditText
+        android:id="@+id/id_da_pessoa"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="24dp"
-        android:background="#047cc4"
-        android:text="ligado" />
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="145dp"
+        android:background="#ECECEC"
+        android:inputType="number"
+        android:textColor="#2b146c" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch" />
 
 </RelativeLayout>

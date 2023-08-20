@@ -8,11 +8,11 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,9 +24,9 @@ import java.io.BufferedWriter;
 
 import android.widget.Button;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
+import java.util.List;
+
 public class mainActivity extends Activity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -43,24 +43,32 @@ public class mainActivity extends Activity implements SensorEventListener {
     private String bpmText;
     private String bpmDisplayText;
     private Button botao;
-    private TextView displayPessoaiD;
-    private int pessoaID = 1;
-    private String pessoaIDText;
+    private TextView displayPosicaoiD;
+    private int poiscaoId = 1;
+    private int quant_de_posicoes = 10;
+    private String posicaoIDText;
     private String arquivoAcelerometro;
     private String arquivoGiroscopio;
-    //private String arquivoBpm;
     private Button botaoParar;
     private int parado = 1;
 
     private Date data = Calendar.getInstance().getTime();
+    private EditText pessoaId;
+    private String num_pessoaId;
 
-    private String arquivoBpm = "BPM" + pessoaID + "txt";
+    private List<String> posicoes = new ArrayList<>();
+    private int posicaoAtual;
+    private String posicaoAtualnome;
+
+
+    private String arquivoBpm = "BPM" + num_pessoaId + "txt";
     private SensorEventListener bpmEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+            num_pessoaId = pessoaId.getText().toString();
             data = Calendar.getInstance().getTime();
             bpmDisplayText = "bpm: " + event.values[0];
-            bpmText = "" + data + ", " + event.values[0];
+            bpmText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0];
             displayBpm.setText(bpmDisplayText);
             writeToFile(arquivoBpm, bpmText);
         }
@@ -70,6 +78,8 @@ public class mainActivity extends Activity implements SensorEventListener {
 
         }
     };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +96,24 @@ public class mainActivity extends Activity implements SensorEventListener {
         displayAcelerometro = findViewById(R.id.acele);
         displayGiroscopio = findViewById(R.id.giros);
         botao = findViewById(R.id.button);
-        displayPessoaiD = findViewById(R.id.id_da_pessoa);
+        displayPosicaoiD = findViewById(R.id.posicao);
         botaoParar = findViewById(R.id.parar);
+        pessoaId = findViewById(R.id.id_da_pessoa);
 
-        displayPessoaiD.setText("1");
+        displayPosicaoiD.setText("posição: 1");
 
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        posicoes.add("1");
+        posicoes.add("2");
+        posicoes.add("3");
+        posicoes.add("4");
+        posicoes.add("5");
+        posicoes.add("6");
+        posicoes.add("7");
+        posicoes.add("8");
+        posicoes.add("9");
+
 
     }
     @Override
@@ -104,22 +126,27 @@ public class mainActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 if (parado == 1) {
-                    pessoaID = pessoaID + 1;
-                    pessoaIDText = String.valueOf(pessoaID);
-                    displayPessoaiD.setText(pessoaIDText);
+                    poiscaoId = poiscaoId + 1;
+                    posicaoIDText = String.valueOf(poiscaoId);
+                    displayPosicaoiD.setText("posição: " + posicaoAtual);
                 }
+                if (posicaoAtual < posicoes.size() - 1) {
+                    posicaoAtual++;
+                } else {
+                    posicaoAtual = 1;
+                }
+                posicaoAtualnome = posicoes.get(posicaoAtual).toString();
             }
         });
+
        botaoParar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                if (parado==0) {
                    parado = 1;
-                   //botaoParar.setBackgroundColor()
                }
                else {
                    parado = 0;
-                   //botaoParar.setBackgroundColor();
                }
            }
        });
@@ -134,16 +161,17 @@ public class mainActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        num_pessoaId = pessoaId.getText().toString();
         if (parado == 0) {
             data = Calendar.getInstance().getTime();
             acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
             giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
-            acelerometroText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
-            giroscopioText = "" + data + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+            acelerometroText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+            giroscopioText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
 
 
-            arquivoAcelerometro = "acelerometro" + pessoaID + "txt";
-            arquivoGiroscopio = "giroscopio" + pessoaID + "txt";
+            arquivoAcelerometro = "acelerometro_" + num_pessoaId;
+            arquivoGiroscopio = "giroscopio_" + num_pessoaId;
 
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 displayAcelerometro.setText(acelerometroDisplayText);
