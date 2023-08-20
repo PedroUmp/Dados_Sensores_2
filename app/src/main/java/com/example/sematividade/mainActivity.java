@@ -45,8 +45,6 @@ public class mainActivity extends Activity implements SensorEventListener {
     private Button botao;
     private TextView displayPosicaoiD;
     private int poiscaoId = 1;
-    private int quant_de_posicoes = 10;
-    private String posicaoIDText;
     private String arquivoAcelerometro;
     private String arquivoGiroscopio;
     private Button botaoParar;
@@ -58,7 +56,6 @@ public class mainActivity extends Activity implements SensorEventListener {
 
     private List<String> posicoes = new ArrayList<>();
     private int posicaoAtual;
-    private String posicaoAtualnome;
 
 
     private String arquivoBpm = "BPM" + num_pessoaId + "txt";
@@ -68,7 +65,8 @@ public class mainActivity extends Activity implements SensorEventListener {
             num_pessoaId = pessoaId.getText().toString();
             data = Calendar.getInstance().getTime();
             bpmDisplayText = "bpm: " + event.values[0];
-            bpmText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0];
+            bpmText = "" + data + ", " + poiscaoId + ", " + event.values[0];
+            arquivoBpm = "BPM" + num_pessoaId;
             displayBpm.setText(bpmDisplayText);
             writeToFile(arquivoBpm, bpmText);
         }
@@ -85,13 +83,20 @@ public class mainActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
 
 
+        //manter a tela sempre ligada
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //variaveis de sensores
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         giroscopio = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         bpm = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
 
+        //?
         setContentView(R.layout.main_activity);
+
+        //linkar o código ao layout
         displayBpm = findViewById(R.id.batim);
         displayAcelerometro = findViewById(R.id.acele);
         displayGiroscopio = findViewById(R.id.giros);
@@ -99,11 +104,9 @@ public class mainActivity extends Activity implements SensorEventListener {
         displayPosicaoiD = findViewById(R.id.posicao);
         botaoParar = findViewById(R.id.parar);
         pessoaId = findViewById(R.id.id_da_pessoa);
-
         displayPosicaoiD.setText("posição: 1");
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        //essa lista não é mais utilizada, tem bastante lixo
         posicoes.add("1");
         posicoes.add("2");
         posicoes.add("3");
@@ -119,15 +122,19 @@ public class mainActivity extends Activity implements SensorEventListener {
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_UI);
-        sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_NORMAL);
+
+        //registrando os listeners dos sensores (bpm não funcionou estando na propria classe)
+        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, giroscopio, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(bpmEventListener, bpm, SensorManager.SENSOR_DELAY_NORMAL); //Sempre um por segundo
+
+
+        //listener do botão
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (parado == 1) {
                     poiscaoId = poiscaoId + 1;
-                    posicaoIDText = String.valueOf(poiscaoId);
                     displayPosicaoiD.setText("posição: " + posicaoAtual);
                 }
                 if (posicaoAtual < posicoes.size() - 1) {
@@ -139,7 +146,8 @@ public class mainActivity extends Activity implements SensorEventListener {
             }
         });
 
-       botaoParar.setOnClickListener(new View.OnClickListener() {
+       //Gabriel
+        botaoParar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                if (parado==0) {
@@ -152,6 +160,7 @@ public class mainActivity extends Activity implements SensorEventListener {
        });
     }
 
+    //fecha o applicativo
     @Override
     protected void onPause() {
         super.onPause();
@@ -159,20 +168,30 @@ public class mainActivity extends Activity implements SensorEventListener {
         sensorManager.unregisterListener(bpmEventListener);
     }
 
+    //código que roda toda vez que algum sensor muda
     @Override
     public void onSensorChanged(SensorEvent event) {
+        //id da pessoa
         num_pessoaId = pessoaId.getText().toString();
+
+
         if (parado == 0) {
             data = Calendar.getInstance().getTime();
+            //nada aqui importa
             acelerometroDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
             giroscopioDisplayText = "" + "X=" + event.values[0] + "\nY=" + event.values[1] + "\nZ=" + event.values[2];
-            acelerometroText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
-            giroscopioText = "" + data + ", " + posicaoAtualnome + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+            //até aqui
 
 
+            //Texto que irá para os arquivos
+            acelerometroText = "" + data + ", " + poiscaoId + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+            giroscopioText = "" + data + ", " + poiscaoId + ", " + event.values[0] + ", " + event.values[1] + ", " + event.values[2];
+
+            //cria-se arquivos caso eles não existam no diretório do app
             arquivoAcelerometro = "acelerometro_" + num_pessoaId;
             arquivoGiroscopio = "giroscopio_" + num_pessoaId;
 
+            //Escreve-se os dados nos arquivos
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 displayAcelerometro.setText(acelerometroDisplayText);
                 writeToFile(arquivoAcelerometro, acelerometroText);
@@ -183,7 +202,9 @@ public class mainActivity extends Activity implements SensorEventListener {
         }
     }
 
+    //Função para escrever em arquivos (Gabriel)
     private void writeToFile(String filename, String data) {
+
         if (parado == 0) {
             File directory = new File("/data/data/com.example.sematividade");
             if (!directory.exists()) {

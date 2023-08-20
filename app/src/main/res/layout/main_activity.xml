@@ -31,10 +31,10 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginEnd="97dp"
-        android:layout_marginBottom="210dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="-29dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginBottom="212dp"
         android:text="TextView"
         android:textColor="#FFFFFF" />
 
@@ -44,8 +44,8 @@
         android:layout_height="1dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="156dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="76dp"
         android:text="Acelerometro"
         android:textColor="#FFFFFF" />
 
@@ -56,9 +56,9 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="-6dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="134dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="116dp"
         android:text="Giroscópio"
         android:textColor="#FFFFFF" />
 
@@ -119,11 +119,5 @@
         android:background="#ECECEC"
         android:inputType="number"
         android:textColor="#2b146c" />
-
-    <Switch
-        android:id="@+id/switch3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch" />
 
 </RelativeLayout>
